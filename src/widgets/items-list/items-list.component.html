@@ -1,0 +1,54 @@
+<mat-card appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>{{ title() }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-table [dataSource]="todos()" class="mat-elevation-z2">
+      <ng-container matColumnDef="task">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let todo">
+          <mat-checkbox >{{ todo.task }}</mat-checkbox>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="createdAt">
+        <mat-header-cell *matHeaderCellDef> Created At </mat-header-cell>
+        <mat-cell *matCellDef="let todo">
+          {{ todo.createdAt | date : "mediumDate" }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="timeLeft">
+        <mat-header-cell *matHeaderCellDef> Time left </mat-header-cell>
+        <mat-cell *matCellDef="let todo">
+          <span>
+            {{ todo.timeLeft | date : "shortTime" }}
+          </span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="favorite">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let todo; let i = index">
+          <button mat-icon-button (click)="toggleFavorite(i)">
+            <mat-icon color="warn">{{
+              todo.favorite ? "favorite" : "favorite_border"
+            }}</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let todo; let i = index">
+          <button mat-icon-button color="warn" (click)="deleteTodo(i)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </mat-card-content>
+</mat-card>
